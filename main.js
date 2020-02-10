@@ -15,11 +15,55 @@ window.onload = function () {
   let tradeSun = tradeBtns[0];
   let tradeWater = tradeBtns[1];
   let tradeFertilizer = tradeBtns[2];
-  let round = 7;
+  let round = 1;
   let contents = document.getElementsByClassName("content");
   let peopleContent = contents[0];
   let paiContent = contents[1];
+  let paiDetails = contents[2];
+  let data ={pai:[]};
 
+
+// 给定数据将其随机排列
+  function randomSort2(arr){
+    let mixedArr = [];
+    while(arr.length > 0){
+      let rc = parseInt(Math.random() * arr.length );
+      mixedArr.push(arr[rc]);
+      arr.splice(rc,1);
+    }
+    return mixedArr;
+  }
+// 例子
+
+  //初始化数据函数
+  let getPeople = function(){
+    let newPai = [];
+    let arr1 = [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15];
+    let randomData = randomSort2(arr1);
+    for(let i=0;i<=randomData.length-1;i++){
+      newPai[i] = originalData.pai[randomData[i]];
+      data.pai = newPai;
+    }
+  };
+  getPeople();
+
+  //计算分数
+  let sumScore = function () {
+    console.log("分数");
+    console.log(data);
+    console.log(data.pai.length);
+    let point = 0;
+    for (let i = 0; i <= data.pai.length-1; i++) {
+      console.log("分数");
+      let status = data.pai[i].status;
+      console.log(status);
+      console.log(data.pai[i].point[status]);
+      point += data.pai[i].point[status];
+      console.log("分数");
+      console.log(point);
+    }
+    return point
+  };
 
 //打印状态输出到屏幕
   let poepleScreenOutput = function(){
@@ -35,10 +79,14 @@ window.onload = function () {
   let currentPaiOutput = function () {
     let currentPai = data.pai[people.number];
     let currentPaiStatus = currentPai.status;
+    // let output="当前牌序:"+currentPai.number+",名称:"+currentPai.name+",等级:"+currentPaiStatus
+    //   +",分数:"+currentPai.point[currentPaiStatus]+",升级花费:"+currentPai.cost[currentPaiStatus]+",升级产出:"+currentPai.output[currentPaiStatus];
+    // console.log(output);
     let output="当前牌序:"+currentPai.number+",名称:"+currentPai.name+",等级:"+currentPaiStatus
-      +",分数:"+currentPai.point[currentPaiStatus]+",升级花费:"+currentPai.cost[currentPaiStatus]+",升级产出:"+currentPai.output[currentPaiStatus];
+      +",分值:"+currentPai.point[currentPaiStatus];
     console.log(output);
     paiContent.innerHTML = output;
+    paiDetails.innerHTML = "当前牌详情："+currentPai.details[currentPaiStatus];
   };
   currentPaiOutput();
 
@@ -50,7 +98,10 @@ window.onload = function () {
       people.number = 0;
       round ++;
       if (round >=9){
-        alert("游戏结束")
+        alert("游戏结束");
+        round = 1;
+        alert("本居得分"+sumScore());
+        getPeople();
       }
     }
   };

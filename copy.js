@@ -64,3 +64,17 @@ shengji1.onclick = function () {
   currentPaiOutput();
 
 };
+
+let getPeople = function(){
+  let newPai = [];
+  let arr1 = [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15];
+  let randomData = randomSort2(arr1);
+  console.log(randomData);
+  console.log(randomData.length);
+  for(let i=0;i<=randomData.length-1;i++){
+    console.log(1);
+    newPai[i] = originalData.pai[randomData[i]];
+    data.pai = newPai;
+    console.log(newPai);
+  }
+};
